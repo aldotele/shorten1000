@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 import uuid
 from .models import Url
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.core.exceptions import ValidationError
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 
 def index(request):
@@ -28,5 +28,11 @@ def create(request):
 
 
 def go(request, pk):
-    url_details = Url.objects.get(uuid=pk)
-    return redirect(url_details.link)
+    if request.method == 'GET':
+        try:
+            url_details = Url.objects.get(uuid=pk)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound('enter a valid shortened url.')
+        return redirect(url_details.link)
+    else:
+        return HttpResponseNotAllowed()
