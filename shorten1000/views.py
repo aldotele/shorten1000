@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 import uuid
 from .models import Url
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
+from django.core.exceptions import ValidationError
 
 
 def index(request):
@@ -15,10 +16,15 @@ def create(request):
     if request.method == 'POST':
         url = request.POST['link']
         uid = str(uuid.uuid4())[:5]
-        new_url = Url(link=url, uuid=uid)
-        new_url.save()
-
+        try:
+            new_url = Url(link=url, uuid=uid)
+            new_url.full_clean()
+            new_url.save()
+        except ValidationError:
+            return HttpResponse('The Url is not valid.')
         return HttpResponse(uid)
+    else:
+        return HttpResponseNotAllowed('a url must be provided')
 
 
 def go(request, pk):

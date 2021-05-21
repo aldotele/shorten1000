@@ -48,7 +48,8 @@ input, button {
                             </div>
                             </form>
 
-                            <section id="section"><h2></h2></section>
+                            <section><h2 id="generated"></h2></section>
+
 
                         </div>
                     </div>
@@ -76,8 +77,12 @@ input, button {
         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
       },
       success: function(data){
-        $('h2').html("localhost:8000/"+data)
-      }
+        if (data.length > 5) {
+            $('#generated').html(data)
+        } else {
+            $('#generated').html("localhost:8000/"+data)
+            }
+      },
     });
   });
 </script>
