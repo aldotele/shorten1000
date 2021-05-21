@@ -80,7 +80,8 @@ input, button {
         if (data.length > 5) {
             $('#generated').html(data)
         } else {
-            $('#generated').html("localhost:8000/"+data)
+            new_url = window.location.origin + '/'
+            $('#generated').html(new_url + data)
             }
       },
     });
