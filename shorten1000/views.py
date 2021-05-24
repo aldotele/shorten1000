@@ -15,13 +15,18 @@ def index(request):
 def create(request):
     if request.method == 'POST':
         url = request.POST['link']
+
+        # prepend https:// if not present
+        if 'https://' not in url and 'http://' not in url:
+            url = 'https://' + url
+
         uid = str(uuid.uuid4())[:5]
         try:
             new_url = Url(link=url, uuid=uid)
             new_url.full_clean()
             new_url.save()
         except ValidationError:
-            return HttpResponse('The Url is not valid.')
+            return HttpResponse('error: the Url is not valid.')
         return HttpResponse(uid)
     else:
         return HttpResponseNotAllowed('a url must be provided')
