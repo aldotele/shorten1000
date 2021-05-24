@@ -2,11 +2,11 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, redirect
-import uuid
 from .models import Url
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from shorten1000.helper.check_url import edit_url
+from shorten1000.helper.check_url import edit_url, is_url_existing
+from shorten1000.helper.shorten_url import shorten
 
 
 def index(request):
@@ -20,15 +20,15 @@ def create(request):
         url = request.POST['link']
         # edit url by prepending https:// if not present
         url = edit_url(url)
-
-        uid = str(uuid.uuid4())[:5]
-        try:
-            new_url = Url(link=url, uuid=uid)
-            new_url.full_clean()
-            new_url.save()
-        except ValidationError:
+        # check if website exists
+        if is_url_existing(url):  # url will be shortened only if website exists
+            try:
+                uid = shorten(url)  # shortening url and returning token
+            except ValidationError:
+                return HttpResponse(error_message)
+            return HttpResponse(uid)
+        else:  # website does not exist
             return HttpResponse(error_message)
-        return HttpResponse(uid)
     else:
         return HttpResponseNotAllowed('a url must be provided')
 
