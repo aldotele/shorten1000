@@ -14,6 +14,8 @@ def index(request):
 
 
 def create(request):
+    # create a unique error message for not valid Urls
+    error_message = 'error: the Url is not valid'
     if request.method == 'POST':
         url = request.POST['link']
         # edit url by prepending https:// if not present
@@ -25,7 +27,7 @@ def create(request):
             new_url.full_clean()
             new_url.save()
         except ValidationError:
-            return HttpResponse('error: the Url is not valid.')
+            return HttpResponse(error_message)
         return HttpResponse(uid)
     else:
         return HttpResponseNotAllowed('a url must be provided')
