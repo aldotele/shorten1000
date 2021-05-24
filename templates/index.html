@@ -42,14 +42,13 @@ input, button {
 
                             <form id="post-form">
                                 {% csrf_token %}
-                            <input type="text" name="link" id="link" placeholder="Enter URL here">
+                            <input size="50" type="text" name="link" id="link" placeholder="Enter URL here">
                             <div class="buttons">
                                 <button type="submit" id="shorten">Shorten</button>
                             </div>
                             </form>
 
-                            <section><h3 id="generated"></h3></section>
-
+                            <section><h3 onClick='copyText(this)' id="generated"></h3></section>
 
                         </div>
                     </div>
@@ -65,6 +64,7 @@ input, button {
         <script src="{% static 'js/scripts.js' %}"></script>
     </body>
 
+<!-- Url generation script -->
 <script type="text/javascript">
   $(document).on('submit','#post-form',function(e){
     e.preventDefault();
@@ -77,7 +77,7 @@ input, button {
         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
       },
       success: function(data){
-        if (data.length > 5) {
+        if (data.includes("error")) {
             $('#generated').html(data)
         } else {
             new_url = window.location.origin + '/'
@@ -87,8 +87,31 @@ input, button {
     });
   });
 </script>
-</html>
 
-<!--
-$('#generated').attr("href", new_url)
--->
+<!-- copy to clipboard script -->
+<script type="text/javascript">
+    function copyText(element) {
+      var range, selection, worked;
+
+      if (document.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+      } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      try {
+        document.execCommand('copy');
+        alert('copied to clipboard !');
+      }
+      catch (err) {
+        alert('unable to copy text');
+      }
+    }
+</script>
+</html>
