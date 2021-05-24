@@ -6,6 +6,7 @@ import uuid
 from .models import Url
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from shorten1000.helper.check_url import edit_url
 
 
 def index(request):
@@ -15,10 +16,8 @@ def index(request):
 def create(request):
     if request.method == 'POST':
         url = request.POST['link']
-
-        # prepend https:// if not present
-        if 'https://' not in url and 'http://' not in url:
-            url = 'https://' + url
+        # edit url by prepending https:// if not present
+        url = edit_url(url)
 
         uid = str(uuid.uuid4())[:5]
         try:
