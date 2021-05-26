@@ -5,14 +5,10 @@ from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy, reverse
 
 
-def index(request):
-    return render(request, "empty.html")
-
-
 class UrlCreateView(CreateView):
     model = Url
     fields = ['link']
-    template_name = 'form.html'
+    template_name = 'base.html'
     #success_url = reverse_lazy('show')
 
     def get_success_url(self):
