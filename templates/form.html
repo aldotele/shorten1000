@@ -1,10 +1,19 @@
-<html>
-<body>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% extends "testempty.html" %}
+{% block content %}
 
-    <input type="submit">
-</form>
-</body>
-</html>
+    <h1 class="mb-3">Shorten 1000</h1>
+    <p class="mb-5">
+        Write below your full url...<br />A shorter version will be returned to you!
+    </p>
+
+    <form id="post-form" method="post">
+        {% csrf_token %}
+        <input size="50" type="url" name="link" id="link" placeholder="Enter URL here">
+
+        <div class="buttons">
+            <button type="submit" id="shorten">Shorten</button>
+        </div>
+
+    </form>
+
+{% endblock %}
