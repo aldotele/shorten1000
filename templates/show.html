@@ -1,0 +1,25 @@
+{% extends "empty.html" %}
+
+{% block content %}
+
+    <p class="mb-5">
+        Here is your new Url...
+    </p>
+
+    <h3 id="shortened">{{ request.get_host }}{{ request.origin }}/go/{{ url.uuid }} </h3>
+
+    <button id="copythis" style="float:right"><i class="far fa-copy"></i></button>
+
+{% endblock %}
+
+
+<script type="text/javascript">
+$("#copythis").click(function(e) {
+
+  e.preventDefault();
+
+  document.execCommand('copy', false, document.getElementById('shortened').select());
+
+  alert("copy is completed")
+});
+</script>
