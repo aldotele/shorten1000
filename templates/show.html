@@ -5,19 +5,20 @@
         Here is your new Url...
     </p>
 
-    <h3 id="shortened">{{ request.get_host }}{{ request.origin }}/go/{{ url.uuid }} </h3>
-    <button id="copy" style="float:right"><i class="far fa-copy"></i></button>
+    <input style="width:300px" id="shortened" readonly value="{{ request.get_host }}{{ request.origin }}/go/{{ url.uuid }}" />
+    <button onclick="copyToClipboard()" id="copy"><i class="far fa-copy"></i></button>
+
 {% endblock content%}
 
 {% block extra_js %}
 
-    <script type="text/javascript">
-        $('#copy').on('click', function() {
-          var new_url = document.getElementById("shortened").select()
-          document.execCommand('copy', false, new_url);
-          alert("copy is completed")
-        });
-    </script>
+<script>
+function copyToClipboard () {
+    document.getElementById("shortened").select();
+    document.execCommand("copy");
+    alert("Copied to clipboard");
+}
+</script>
 
 {% endblock extra_js%}
 
