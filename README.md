@@ -5,5 +5,5 @@
  
  `python manage.py runserver --settings=core.settings_local`
  
- The deploy is coming soon at:
- https://sh1000.herokuapp.com/
+Deploy at:\
+http://short.devoping.com/
