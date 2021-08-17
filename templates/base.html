@@ -8,10 +8,12 @@
 
     <form id="post-form" method="post">
         {% csrf_token %}
-        <input size="50" type="url" name="link" id="link" placeholder="Enter URL here">
+        <input style="border-radius: 0.25rem; height: 40px;" size="50" type="url" name="link" id="link" placeholder="Enter URL here">
 
         <div class="buttons">
-            <button type="submit" id="shorten">Shorten</button>
+            <button style="color: white; background-color: #b17e44; border-color: #b17e44;
+            border-radius: 0.25rem; padding: 0.375rem 0.75rem; border: 1px solid transparent;
+            margin-top: 10px;" type="submit" id="shorten">Shorten</button>
         </div>
 
     </form>
