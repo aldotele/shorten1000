@@ -1,9 +1,8 @@
  # Shorten 1000 - Url Shortener
+ Write your URL inside the box and get a shorter version of it.\
+ The implementation includes a *copy to clipboard* feature. 
  
- ## launch:
- type the following command in order to test it out on your local machine: 
+ Try it out:\
+ <a href="https://s1000.herokuapp.com/" target="_blank">s1000.herokuapp.com</a>
  
- `python manage.py runserver --settings=core.settings_local`
  
-Deploy at:\
-<a href="http://short.devoping.com/" target="_blank">short.devoping</a>
