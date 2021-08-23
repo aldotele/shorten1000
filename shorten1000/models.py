@@ -14,3 +14,9 @@ class Url(models.Model):
     def get_short_url(self):
         return self.uuid
         #return reverse('redirect', kwargs={'uuid', self.uuid})
+
+    def __str__(self):
+        return self.link
+
+    class Meta:
+        db_table = "URL"
